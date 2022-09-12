@@ -1,6 +1,8 @@
 import React from "react";
 import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { AddBook } from "../actions/BookAction";
+import {connect} from "react-redux";
 
 function AddBookForm(props) {
 	const [title, setTitle] = useState("");
@@ -12,7 +14,7 @@ function AddBookForm(props) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		props.newBook({ title, author, description });
+		props.AddBook({ title, author, description });
 		setTitle("");
 		setAuthor("");
 		setDescription("");
@@ -51,5 +53,8 @@ function AddBookForm(props) {
 		</Form>
 	);
 }
-
-export default AddBookForm;           
+const mapDispatchToProps = {
+	AddBook: AddBook,
+};
+export default connect(null, mapDispatchToProps)(AddBookForm);
+// export default AddBookForm;           

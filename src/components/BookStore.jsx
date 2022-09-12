@@ -1,12 +1,21 @@
 import React from "react";
 import Book from "./Book";
-import {Container, Row} from "react-bootstrap"
+import {Container, Row} from "react-bootstrap";
+import { useSelector } from "react-redux";
 
-function BookStore(props) {
+const BookStore = (props) => {
+
+
+const  {books} = useSelector ((state) => {
+	return state
+})
+
+
 	return (
+		
 		<Container>
 			<Row>
-					{props.bookInfo.map((item, index) => {
+					{books.map((item, index) => {
 						return (
 						<Book 
 							key={index} 
