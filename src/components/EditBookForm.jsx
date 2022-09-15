@@ -1,22 +1,30 @@
 import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
+import { EditBook } from "../actions/BookAction";
+import { useDispatch } from "react-redux";
 
 function EditBookForm(props) {
+	const dispatch = useDispatch();
 	const [title, setTitle] = useState(props.bookInfo.title);
 	const [author, setAuthor] = useState(props.bookInfo.author);
 	const [description, setDescription] = useState(props.bookInfo.description);
 
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		props.EditBook(props.bookInfo.id, { title, author, description });
-
+		const newData={
+			id: props.bookInfo.id,
+			  title, author, description
+		}
+		dispatch(EditBook(newData))
+		// props.EditBook(props.bookInfo.id, { title, author, description });
+		console.log(newData);
 		setTitle("");
 		setAuthor("");
 		setDescription("");
 		props.handleClose();
 	};
 	return (
-			<Form>
+			<Form onSubmit={handleSubmit} >
 				<Form.Group className="mb-3" controlId="formBasicAuthor">
 					<Form.Label>Title:</Form.Label>
 					<Form.Control
@@ -49,7 +57,7 @@ function EditBookForm(props) {
 					/>
 				</Form.Group>
 
-				<Button onClick={handleSubmit} variant="primary" type="submit">
+				<Button  variant="primary" type="submit">
 					Submit
 				</Button>
 			</Form>

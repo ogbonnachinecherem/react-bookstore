@@ -1,6 +1,8 @@
 import React,  { useState } from "react";
 import { Col, Card, Button, Modal} from "react-bootstrap";
 import EditBookForm from "./EditBookForm";
+import { DeleteBook } from "../actions/BookAction";
+import { connect } from "react-redux";
 
 function Book(props) {
 	const [show, setShow] = useState(false);
@@ -8,7 +10,8 @@ function Book(props) {
 	const handleShow = () => setShow(true);
 	const handleDelete = (e) => {
 		e.preventDefault();
-		props.delete(props.bookInfo.id);
+		props.DeleteBook(props.bookInfo.id);
+		// props.delete(props.bookInfo.id);
 	};
 	
 	return (
@@ -36,6 +39,11 @@ function Book(props) {
 	  </>
 	);
 };
-export default Book;
+const mapDispatchToProps = {
+	DeleteBook: DeleteBook
+};
+
+export default connect(null, mapDispatchToProps)(Book);
+// export default Book;
 
 

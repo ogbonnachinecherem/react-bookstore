@@ -3,6 +3,7 @@ import { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { AddBook } from "../actions/BookAction";
 import {connect} from "react-redux";
+import { v4 as uuid } from "uuid";
 
 function AddBookForm(props) {
 	const [title, setTitle] = useState("");
@@ -14,7 +15,8 @@ function AddBookForm(props) {
 	};
 	const handleSubmit = (e) => {
 		e.preventDefault();
-		props.AddBook({ title, author, description });
+		props.AddBook({id:uuid(), title, author, description });
+		// props.AddBook({ title, author, description });
 		setTitle("");
 		setAuthor("");
 		setDescription("");

@@ -5,3 +5,17 @@ export const AddBook =(newBook)=>{
     }
   
   }
+  export const EditBook =(book)=>{
+    return{
+      type:"EDIT_BOOK",
+      payload:book
+    }
+  
+  }
+  export const DeleteBook =(id)=>{
+    return{
+      type:"DELETE_BOOK",
+      payload:id
+    }
+  
+  }
