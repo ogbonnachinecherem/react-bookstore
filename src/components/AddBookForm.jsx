@@ -4,6 +4,8 @@ import { Form, Button } from "react-bootstrap";
 import { AddBook } from "../actions/BookAction";
 import {connect} from "react-redux";
 import { v4 as uuid } from "uuid";
+import {db} from "../firebase/Config";
+import { doc, setDoc } from "firebase/firestore"; 
 
 function AddBookForm(props) {
 	const [title, setTitle] = useState("");
@@ -13,9 +15,12 @@ function AddBookForm(props) {
 		setDescription(e.target.value);
 		//console.log(description);
 	};
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
-		props.AddBook({id:uuid(), title, author, description });
+		let mybook = {id:uuid(), title, author, description}
+
+		await setDoc(doc(db,"codetrainBooks", mybook.id),mybook)
+		// props.AddBook({id:uuid(), title, author, description });
 		// props.AddBook({ title, author, description });
 		setTitle("");
 		setAuthor("");
