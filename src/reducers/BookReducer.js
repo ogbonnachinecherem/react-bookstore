@@ -1,29 +1,30 @@
 import { v4 as uuid } from "uuid";
 let initialState= {
-    books: [
-        { title: "Things Fall Apart", 
-		author: " Chinua Achebe", 
-		description: "The novel chronicles the life of Okonkwo, the leader of an Igbo community" ,
-	    id: uuid(),
-	    },
+    books:
+	 [
+        // { title: "Things Fall Apart", 
+		// author: " Chinua Achebe", 
+		// description: "The novel chronicles the life of Okonkwo, the leader of an Igbo community" ,
+	    // id: uuid(),
+	    // },
 
-		{ title: "Purple Hibiscus", 
-		author: "Ngozi Adichie", 
-		description: "The story is told through Kambili's eyes and is essentially", 
-		id: uuid(),
-	    },
+		// { title: "Purple Hibiscus", 
+		// author: "Ngozi Adichie", 
+		// description: "The story is told through Kambili's eyes and is essentially", 
+		// id: uuid(),
+	    // },
 
-		{ title: "Eze Goes To School", 
-		author: "Onuora Nzekwu", 
-		description: "Eze Goes To School centers mainly on Eze Adi who struggles to get",
-	    id: uuid(),
-	     },
+		// { title: "Eze Goes To School", 
+		// author: "Onuora Nzekwu", 
+		// description: "Eze Goes To School centers mainly on Eze Adi who struggles to get",
+	    // id: uuid(),
+	    //  },
     ],
  };
 let BooksReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case "ADD_BOOK":
-		  return {...state, books: [...state.books, action.payload]}
+		  return {...state, books: action.payload}
 		  case "DELETE_BOOK": 
 		  const unDeletedBooks = state.books.filter((book) =>
 		  book.id!== action.payload)

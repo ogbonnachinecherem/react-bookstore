@@ -1,30 +1,32 @@
-import React from "react";
-import { useState } from "react";
+import {React, useState} from "react";
 import { Form, Button } from "react-bootstrap";
 import { AddBook } from "../actions/BookAction";
 import {connect} from "react-redux";
 import { v4 as uuid } from "uuid";
 import {db} from "../firebase/Config";
-import { doc, setDoc } from "firebase/firestore"; 
+import { doc, setDoc, serverTimestamp} from "firebase/firestore";
+
 
 function AddBookForm(props) {
 	const [title, setTitle] = useState("");
 	const [author, setAuthor] = useState("");
 	const [description, setDescription] = useState("");
-	const handleChange = (e) => {
-		setDescription(e.target.value);
-		//console.log(description);
-	};
+
+	// const handleChange = (e) => {
+	// 	setDescription(e.target.value);
+	// 	//console.log(description);
+	// };
 	const handleSubmit = async(e) => {
 		e.preventDefault();
-		let mybook = {id:uuid(), title, author, description}
+		let mybook = {id:uuid(), title, author, description,timestamp: serverTimestamp()}
 
-		await setDoc(doc(db,"codetrainBooks", mybook.id),mybook)
+		try {await setDoc(doc(db,"newBooks", mybook.id),mybook)
 		// props.AddBook({id:uuid(), title, author, description });
 		// props.AddBook({ title, author, description });
 		setTitle("");
 		setAuthor("");
 		setDescription("");
+	    }catch(e){console.log(e)}
 	};
 	return (
 		<Form>
@@ -51,7 +53,10 @@ function AddBookForm(props) {
 
 			<Form.Group className="mb-3" controlId="formBasicDescription">
 				<Form.Label>Description:</Form.Label>
-				<Form.Control type="text" name="description" value={description} onChange={handleChange} required/>
+				<Form.Control type="text" name="description" value={description}
+				 onChange={(e) => 
+				{setDescription(e.target.value);
+				}} required/>
 			</Form.Group>
 
 			<Button variant="primary" type="submit" onClick={handleSubmit}>
