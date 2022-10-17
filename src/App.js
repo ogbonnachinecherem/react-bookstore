@@ -1,5 +1,5 @@
 import "bootstrap/dist/css/bootstrap.min.css";
-import React, {useState, useEffect } from "react";
+import React, {useEffect } from "react";
 import { Container, Row, Col,} from "react-bootstrap";
 import BookStore from "./components/BookStore";
 import AddBookForm from "./components/AddBookForm";
@@ -19,7 +19,7 @@ function App() {
 					const books = [];
 					querySnapshot.forEach((doc) => {
 						books.push(doc.data());
-					});
+					},[]);
 					dispatch(AddBook(books));
 					console.log(books);
 				});
@@ -29,6 +29,7 @@ function App() {
 			console.log(e);
 		}
 	})
+	
 
 //function App() {}
 	//const [books, setBooks] = useState([

@@ -3,16 +3,28 @@ import { Col, Card, Button, Modal} from "react-bootstrap";
 import EditBookForm from "./EditBookForm";
 import { DeleteBook } from "../actions/BookAction";
 import { connect } from "react-redux";
+import { doc, deleteDoc } from "firebase/firestore";
+import {db} from "../firebase/Config";
 
 function Book(props) {
 	const [show, setShow] = useState(false);
 	const handleClose = () => setShow(false);
 	const handleShow = () => setShow(true);
-	const handleDelete = (e) => {
+	const handleDelete = async(e) => {
 		e.preventDefault();
-		props.DeleteBook(props.bookInfo.id);
+		//props.DeleteBook(props.bookInfo.id);
 		// props.delete(props.bookInfo.id);
+		try {
+			await deleteDoc(doc(db, "newBooks", props.bookInfo.id));
+		} catch (e) {
+			console.log(e);
+		}
+		
+
+		
 	};
+
+	
 	
 	return (
 		<>

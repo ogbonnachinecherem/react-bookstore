@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import { Form, Button } from "react-bootstrap";
 import { EditBook } from "../actions/BookAction";
 import { useDispatch } from "react-redux";
+import { doc, updateDoc } from "firebase/firestore";
+import {db} from "../firebase/Config"
 
 function EditBookForm(props) {
 	const dispatch = useDispatch();
@@ -9,19 +11,27 @@ function EditBookForm(props) {
 	const [author, setAuthor] = useState(props.bookInfo.author);
 	const [description, setDescription] = useState(props.bookInfo.description);
 
-	const handleSubmit = (e) => {
+	const handleSubmit = async(e) => {
 		e.preventDefault();
 		const newData={
 			id: props.bookInfo.id,
 			  title, author, description
 		}
-		dispatch(EditBook(newData))
+		//dispatch(EditBook(newData))
 		// props.EditBook(props.bookInfo.id, { title, author, description });
-		console.log(newData);
+		const bookRef = doc(db, "newBooks",newData.id);
+
+		await updateDoc(bookRef,newData);
 		setTitle("");
 		setAuthor("");
 		setDescription("");
 		props.handleClose();
+
+		// console.log(newData);
+		// setTitle("");
+		// setAuthor("");
+		// setDescription("");
+		// props.handleClose();
 	};
 	return (
 			<Form onSubmit={handleSubmit} >
